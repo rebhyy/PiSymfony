@@ -101,25 +101,63 @@
 
 <div class="col-lg-8 pb-5">
 
+
+
 <div class="col-md-6">
 <div class="form-group">
 <label for="account-fn">First Name</label>
-{{form_widget(form.firstName,{'attr':{'class':'form-control'}})}}</div>
+{{form_widget(form.firstName,{'attr':{'class':'form-control'}})}}
+
+   {% if   form.vars.submitted and not form.vars.valid %}
+
+
+               
+                  {{ form_errors(form.firstName) }}
+
+{% endif %}
+
+</div>
 </div>
  <div class="col-md-6">
 <div class="form-group">
 <label for="account-ln">Last Name</label>
+
+   {% if   form.vars.submitted and not form.vars.valid %}
+
+
+               
+                  {{ form_errors(form.lastName) }}
+
+{% endif %}
 {{form_widget(form.lastName,{'attr':{'class':'form-control'}})}}</div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label for="account-email">E-mail Address</label>
-{{form_widget(form.email,{'attr':{'class':'form-control'}})}}</div>
+{{form_widget(form.email,{'attr':{'class':'form-control'}})}}
+
+   {% if   form.vars.submitted and not form.vars.valid %}
+
+
+               
+                  {{ form_errors(form.email) }}
+
+{% endif %}
+</div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label for="account-phone">Phone Number</label>
-{{form_widget(form.phone,{'attr':{'class':'form-control'}})}}</div>
+{{form_widget(form.phone,{'attr':{'class':'form-control'}})}}
+   {% if   form.vars.submitted and not form.vars.valid %}
+
+
+               
+                  {{ form_errors(form.phone) }}
+
+{% endif %}
+
+</div>
 </div>
 {# <div class="col-md-6">
 <div class="form-group">

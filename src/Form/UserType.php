@@ -60,6 +60,11 @@ class UserType extends AbstractType
 
                 ]),
                 
+                new Regex([
+                    'pattern' => '/^\d+$/',
+                    'message' => 'Your phone number should contain digits only',
+                ]),
+                
                 ]
         ])
             ->add('roles', ChoiceType::class, [

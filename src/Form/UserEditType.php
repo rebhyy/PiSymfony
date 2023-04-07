@@ -23,8 +23,15 @@ class UserEditType extends AbstractType
     {
         $builder
             
+        
        
-            ->add('email')
+            ->add('email', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\S+@\S+\.\S+$/',
+                    ]),
+                ],
+            ])
             ->add('image', FileType::class, [
                 'label' => 'image du produit',
     
@@ -63,12 +70,30 @@ class UserEditType extends AbstractType
                         'minMessage' => 'Your phone number must be at least {{ limit }} numbers',
                         'maxMessage' => 'Your phone number cannot be longer than {{ limit }} numbers',
                     ]),
+
+                    new Regex([
+                        'pattern' => '/^\d+$/',
+                        'message' => 'Your phone number should contain digits only',
+                    ]),
                     
                     ]
             ])
-            ->add('firstName')
-            ->add('lastName')
-        ;
+            ->add('firstName', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'The First name should contain letters only',
+                    ]),
+                ],
+            ])
+            ->add('lastName', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'The Last name should contain letters only',
+                    ]),
+                ],
+            ])        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
