@@ -116,11 +116,14 @@ public function DeleteUser(EntityManagerInterface $entityManager,User $user, Use
     $session = $request->getSession();
 
         $user = $repository->find($id);
+        if (!$user || !$user->getId()) {
+            throw new \Exception("User not found or has no identifier");
+        }
         $entityManager =$doctrine->getManager();
         $entityManager->remove($user);
         $entityManager->flush();
 
-      $session->remove($id);
+        $session->remove('user_id');
         return $this->redirectToRoute('registration');
 
   }
