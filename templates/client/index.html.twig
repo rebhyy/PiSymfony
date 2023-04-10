@@ -111,8 +111,11 @@
    {% if   form.vars.submitted and not form.vars.valid %}
 
 
-               
-                  {{ form_errors(form.firstName) }}
+                    <div style="color: red;">
+
+                     {{ form_errors(form.firstName) }}
+                   </div>
+
 
 {% endif %}
 
@@ -124,9 +127,12 @@
 
    {% if   form.vars.submitted and not form.vars.valid %}
 
+                    <div style="color: red;">
 
                
-                  {{ form_errors(form.lastName) }}
+                       {{ form_errors(form.lastName) }}
+                    </div>
+
 
 {% endif %}
 {{form_widget(form.lastName,{'attr':{'class':'form-control'}})}}</div>
@@ -139,8 +145,10 @@
    {% if   form.vars.submitted and not form.vars.valid %}
 
 
-               
+               <div style="color: red;">
+
                   {{ form_errors(form.email) }}
+               </div>
 
 {% endif %}
 </div>
@@ -152,33 +160,16 @@
    {% if   form.vars.submitted and not form.vars.valid %}
 
 
-               
-                  {{ form_errors(form.phone) }}
+              <div style="color: red;">
+
+                  {{ form_errors(form.phone) }}    
+              </div>
+
 
 {% endif %}
 
 </div>
 </div>
-{# <div class="col-md-6">
-<div class="form-group">
-<label for="account-pass">New Password</label>
-{{form_widget(form.password.first,{'attr':{'class':'form-control'}})}}</div>
-</div>
-</div>
-<div class="col-md-4">
-<div class="form-group">
-<label for="account-confirm-pass">Confirm Password</label>
-{{form_widget(form.password.second,{'attr':{'class':'form-control'}})}}</div>
-</div>
-</div> #}
-{# <div class="col-12">
-<hr class="mt-2 mb-3">
-<div class="d-flex flex-wrap justify-content-between align-items-center">
-<div class="custom-control custom-checkbox d-block">
-<input class="custom-control-input" type="checkbox" id="subscribe_me" checked="">
-<label class="custom-control-label" for="subscribe_me">Subscribe me to Newsletter</label>
-</div> #}
-{# <button  type="submit" class="btn btn-primary"  style="background-color: orangered;" type="button" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button> #}
         <button type="submit" class="btn btn-primary">Save Changes</button>
 
 
