@@ -57,6 +57,31 @@ class ClientController extends AbstractController
         }
     }
 
+    #[Route('/save-image', name: 'saveImage', methods: ['POST'])]
+public function saveImage(ManagerRegistry $doctrine, Request $request): Response
+{
+  $user = $this->getUser();
+  $data = json_decode($request->getContent(), true);
+  $imageData = $data['image'];
+
+  // Convert the data URL to a file and save it to the server
+  $fileData = explode(',', $imageData)[1];
+  $fileBinaryData = base64_decode($fileData);
+  $fileName = uniqid() . '.png';
+  file_put_contents($this->getParameter('app.path.product_images') . '/' . $fileName, $fileBinaryData);
+
+  // Save the file name to the user entity
+  $user->setImage($fileName);
+
+  // Persist the user entity to the database
+  $em = $doctrine->getManager();
+  $em->persist($user);
+  $em->flush();
+
+  return new JsonResponse(['success' => true]);
+}
+
+
 #[Route('/client/profile/modifier', name: 'clientProfile',methods: ['GET', 'POST'])]
 
 public function userProfile(ManagerRegistry $doctrine, Request $request, UserRepository $repository, SluggerInterface $slugger): response
@@ -71,6 +96,7 @@ public function userProfile(ManagerRegistry $doctrine, Request $request, UserRep
     if ($form->isSubmitted() && $form->isValid()) {
 
         $photo = $form->get('image')->getData();
+
 
         // this condition is needed because the 'brochure' field is not required
         // so the PDF file must be processed only when a file is uploaded
@@ -94,6 +120,9 @@ public function userProfile(ManagerRegistry $doctrine, Request $request, UserRep
             // instead of its contents
             $user->setImage($newFilename);
         }
+
+              
+
         $em = $doctrine->getManager();
         $em->persist($user);
         $em->flush();
@@ -107,6 +136,7 @@ public function userProfile(ManagerRegistry $doctrine, Request $request, UserRep
 
     ]);
 }
+
 
 
  #[Route('/client/profile/modifier/{id}', name: 'deleteProfile')]

@@ -93,7 +93,8 @@ class UserEditType extends AbstractType
                         'message' => 'The Last name should contain letters only',
                     ]),
                 ],
-            ])        ;
+            ]) 
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
