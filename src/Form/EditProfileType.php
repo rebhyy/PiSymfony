@@ -25,7 +25,7 @@ class EditProfileType extends AbstractType
         $builder
 
         ->add('image', FileType::class, [
-            'label' => 'image du produit',
+            'label' => 'image du profile',
 
             // unmapped means that this field is not associated to any entity property
             'mapped' => false,

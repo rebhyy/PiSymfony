@@ -51,7 +51,19 @@ class AdminController extends AbstractController
 
 
 
+    // #[Route('/admin', name: 'admin')]
+    // public function index(UserRepository $repository): Response
+    // {
 
+    //     $user = $repository->findByRole('ROLE_ADMIN');
+    //     $userClient = $repository->findByRole('ROLE_USER');
+    //    return $this->render('admin/index.html.twig', [
+    //         'form' => $form->createView(),
+    //         'errors' => $errors,
+    //         'user'=>$user = $repository->findByRole('ROLE_ADMIN'),
+    //         'userClient'=>$userClient
+    //     ]);
+    // }
 
     #[Route('profile/modifier', name: 'adminProfile',methods: ['GET', 'POST'])]
 
@@ -64,8 +76,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
 
             $photo = $form->get('image')->getData();
 
@@ -87,6 +97,8 @@ class AdminController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
 
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
                 $user->setImage($newFilename);
             }
             $em = $doctrine->getManager();
@@ -126,7 +138,7 @@ class AdminController extends AbstractController
     public function AddAdmin(Request $request, ManagerRegistry $doctrine,UserRepository $repository)
     {
         $user = new User();     
-        $userClient = $repository->findByRole('ROLE_ADMIN');
+        $userClient = $repository->findAll();
         $form = $this->createForm(AdminType::class, $user);
         // $form->add('Add',SubmitType::class);
 
@@ -151,8 +163,27 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'form' => $form->createView(),
             'errors' => $errors,
-            'user'=>$user = $repository->findAll(),
+            'user'=>$user = $repository->findByRole('ROLE_ADMIN'),
             'userClient'=>$userClient
         ]);
     }
+
+    #[Route('/admin/{id}', name: 'deleteUser')]
+     
+public function DeleteUser(EntityManagerInterface $entityManager,User $user, UserRepository $repository,$id,ManagerRegistry $doctrine,Request $request ){
+
+    $session = $request->getSession();
+
+        $user = $repository->find($id);
+        $entityManager =$doctrine->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+      $session->remove($id);
+        return $this->redirectToRoute('adminbacks');
+
+  }
+
+
+    
 }

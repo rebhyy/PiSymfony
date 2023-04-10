@@ -20,9 +20,22 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'The First name should contain letters only',
+                    ]),
+                ],
+            ])
+            ->add('lastName', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'The Last name should contain letters only',
+                    ]),
+                ],
+            ])
             ->add('email')
             ->add('password',RepeatedType::class,[
                 'type'=>Passwordtype::class,
@@ -64,6 +77,7 @@ class UserType extends AbstractType
                     'pattern' => '/^\d+$/',
                     'message' => 'Your phone number should contain digits only',
                 ]),
+                
                 
                 ]
         ])
